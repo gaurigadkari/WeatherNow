@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="search_location_margin">16dp</dimen>
+    <dimen name="search_location_margintop">8dp</dimen>
+    <dimen name="search_location_marginbottom">8dp</dimen>
+    <dimen name="search_location_marginleft">8dp</dimen>
+    <dimen name="search_location_marginright">8dp</dimen>
+    <dimen name="weather_icon_dimensions">40dp</dimen>
+</resources>
