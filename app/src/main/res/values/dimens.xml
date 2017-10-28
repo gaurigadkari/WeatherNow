@@ -5,5 +5,7 @@
     <dimen name="search_location_marginbottom">8dp</dimen>
     <dimen name="search_location_marginleft">8dp</dimen>
     <dimen name="search_location_marginright">8dp</dimen>
-    <dimen name="weather_icon_dimensions">40dp</dimen>
+    <dimen name="weather_icon_dimensions">50dp</dimen>
+    <dimen name="cardview_margin">8dp</dimen>
+    <dimen name="cardview_padding">8dp</dimen>
 </resources>

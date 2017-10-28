@@ -63,6 +63,16 @@ public class ConsolidatedWeather {
     private int predictability;
     @ColumnInfo(name = "location_woeid")
     private int locationWoeid;
+    @ColumnInfo(name = "weather_icon_path")
+    private String weatherIconPath;
+
+    public String getWeatherIconPath() {
+        return weatherIconPath;
+    }
+
+    public void setWeatherIconPath(String weatherStateAbbr) {
+        this.weatherIconPath = "https://www.metaweather.com/static/img/weather/png/" + weatherStateAbbr + ".png";
+    }
 
     public String getId() {
         return id;

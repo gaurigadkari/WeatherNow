@@ -31,8 +31,9 @@
             android:layout_height="match_parent"
             android:id="@+id/weatherList"
             android:layout_below="@+id/etLocation"
-            android:layout_margin="@dimen/search_location_margin"
-            android:layout_marginTop="@dimen/search_location_margintop"
+            android:layout_marginBottom="@dimen/search_location_margin"
+            android:layout_marginLeft="@dimen/search_location_margin"
+            android:layout_marginRight="@dimen/search_location_margin"
             android:visibility="gone"/>
     </RelativeLayout>
 
