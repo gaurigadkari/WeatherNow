@@ -16,24 +16,48 @@
             android:padding="@dimen/cardview_padding">
 
             <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/today"
+                android:visibility="gone"
+                android:textColor="@android:color/holo_blue_light"
+                android:layout_marginBottom="@dimen/weather_item_textview_marginbottom"
+                android:text="@string/today"
+                android:textAllCaps="true"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/date"
+                android:layout_below="@id/today"/>
+
+            <TextView
                 android:id="@+id/weather_state_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Showers" />
+                tools:text="Showers"
+                android:layout_below="@id/date"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_marginBottom="@dimen/weather_item_textview_marginbottom"/>
+
 
             <TextView
                 android:id="@+id/temp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/weather_state_name"
-                tools:text="77 F" />
+                tools:text="77 F"
+                android:textSize="16sp"
+                android:layout_marginBottom="@dimen/weather_item_textview_marginbottom"/>
 
             <TextView
                 android:id="@+id/humidity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/temp"
-                tools:text="56%" />
+                tools:text="56%"
+                android:layout_marginBottom="@dimen/weather_item_textview_marginbottom"/>
+
 
             <ImageView
                 android:id="@+id/weather_state_icon"

@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by Gauri Gadkari on 10/26/17.
  */
-@Entity(foreignKeys = @ForeignKey(entity = Response.class,
+@Entity(foreignKeys = @ForeignKey(entity = Location.class,
         parentColumns = "woeid",
         childColumns = "location_woeid"))
 public class ConsolidatedWeather {
@@ -138,8 +138,8 @@ public class ConsolidatedWeather {
         this.maxTemp = maxTemp;
     }
 
-    public float getTheTemp() {
-        return theTemp;
+    public int getTheTemp() {
+        return (int)theTemp;
     }
 
     public void setTheTemp(float theTemp) {

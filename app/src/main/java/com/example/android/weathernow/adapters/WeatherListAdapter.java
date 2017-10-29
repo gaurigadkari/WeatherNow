@@ -3,6 +3,7 @@ package com.example.android.weathernow.adapters;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,10 @@ import com.example.android.weathernow.R;
 import com.example.android.weathernow.databinding.WeatherItemBinding;
 import com.example.android.weathernow.models.ConsolidatedWeather;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -34,11 +39,29 @@ public class WeatherListAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ConsolidatedWeather weather = weatherList.get(position);
         ((WeatherViewHolder) holder).weatherStateName.setText(weather.getWeatherStateName());
-        ((WeatherViewHolder) holder).temperature.setText(weather.getTheTemp() + "");
-        ((WeatherViewHolder) holder).humidity.setText(weather.getHumidity() + "%");
+        ((WeatherViewHolder) holder).temperature.setText(weather.getTheTemp() + "°C");
+        ((WeatherViewHolder) holder).humidity.setText("HUMIDITY " + weather.getHumidity() + "%");
         weather.setWeatherIconPath(weather.getWeatherStateAbbr());
         String path = weather.getWeatherIconPath();
         Glide.with(context).load(path).into(((WeatherViewHolder) holder).weatherStateIcon);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            Date today = calendar.getTime();
+            Date date = formatter.parse(weather.getApplicableDate());
+            if(date.toString().equals(today.toString())) {
+                ((WeatherViewHolder) holder).today.setVisibility(View.VISIBLE);
+                ((WeatherViewHolder) holder).date.setVisibility(View.GONE);
+            } else {
+                String newDate = new SimpleDateFormat("dd-MMM").format(date);
+                ((WeatherViewHolder) holder).date.setText(newDate);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -52,7 +75,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter {
     }
 
     public class WeatherViewHolder extends RecyclerView.ViewHolder {
-        TextView weatherStateName, temperature, humidity;
+        TextView weatherStateName, temperature, humidity, today, date;
         ImageView weatherStateIcon;
         public WeatherViewHolder(View itemView) {
             super(itemView);
@@ -60,6 +83,8 @@ public class WeatherListAdapter extends RecyclerView.Adapter {
             temperature = itemView.findViewById(R.id.temp);
             humidity = itemView.findViewById(R.id.humidity);
             weatherStateIcon = itemView.findViewById(R.id.weather_state_icon);
+            today = itemView.findViewById(R.id.today);
+            date = itemView.findViewById(R.id.date);
         }
     }
 }

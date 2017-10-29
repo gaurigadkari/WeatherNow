@@ -1,40 +1,34 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.android.weathernow.view.search.SearchLocationFragment">
+    tools:context="com.example.android.weathernow.view.search.SearchLocationFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="@string/hello_blank_fragment" >
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:id="@+id/btnSearch"
-            android:layout_margin="@dimen/search_location_margin"
-            android:layout_marginLeft="@dimen/search_location_marginleft"
-            android:text="@string/search"/>
-
-        <EditText
-            android:id="@+id/etLocation"
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_margin="@dimen/search_location_margin"
-            android:layout_toStartOf="@+id/btnSearch"
-            android:layout_marginBottom="@dimen/search_location_marginbottom"
-            android:layout_marginRight="@dimen/search_location_marginright"/>
+            android:id="@+id/cardContainer"
+            android:layout_margin="@dimen/cardview_margin">
+        <fragment
+            android:id="@+id/place_autocomplete_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment"
+            />
+        </android.support.v7.widget.CardView>
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/weatherList"
-            android:layout_below="@+id/etLocation"
+            android:layout_below="@+id/cardContainer"
             android:layout_marginBottom="@dimen/search_location_margin"
             android:layout_marginLeft="@dimen/search_location_margin"
             android:layout_marginRight="@dimen/search_location_margin"
-            android:visibility="gone"/>
+            />
     </RelativeLayout>
 
 </layout>
