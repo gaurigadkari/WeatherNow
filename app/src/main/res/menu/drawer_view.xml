@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/get_weather_first"
+            android:title="First" />
+        <item
+            android:id="@+id/get_weather_second"
+            android:title="Second" />
+        <item
+            android:id="@+id/get_weather_third"
+            android:title="Third" />
+        <item
+            android:id="@+id/get_weather_fouth"
+            android:title="Fourth" />
+        <item
+            android:id="@+id/get_weather_fifth"
+            android:title="Fifth" />
+
+    </group>
+</menu>

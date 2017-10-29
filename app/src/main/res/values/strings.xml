@@ -7,5 +7,9 @@
     <string name="device_offline">Make sure your device is connected to the internet</string>
     <string name="empty_search">Search text can not be empty</string>
     <string name="today">Today</string>
+    <string name="max_temp">Max Temp</string>
+    <string name="min_temp">Min Temp</string>
+    <string name="permision_available_location">Location Permissions have been granted. Showing current Weather.</string>
+    <string name="permissions_not_granted">Permissions were not granted.</string>
 
 </resources>

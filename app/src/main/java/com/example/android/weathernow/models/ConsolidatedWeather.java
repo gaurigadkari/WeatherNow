@@ -10,12 +10,15 @@ import android.support.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 /**
  * Created by Gauri Gadkari on 10/26/17.
  */
 @Entity(foreignKeys = @ForeignKey(entity = Location.class,
         parentColumns = "woeid",
         childColumns = "location_woeid"), tableName = "weather")
+@Parcel
 public class ConsolidatedWeather {
     @PrimaryKey
     @NonNull
@@ -58,10 +61,10 @@ public class ConsolidatedWeather {
     @SerializedName("humidity")
     @Expose
     private int humidity;
-    @Ignore
-    @SerializedName("visibility")
-    @Expose
-    private Object visibility;
+//    @Ignore
+//    @SerializedName("visibility")
+//    @Expose
+//    private Object visibility;
     @SerializedName("predictability")
     @Expose
     private int predictability;
@@ -126,16 +129,16 @@ public class ConsolidatedWeather {
         this.applicableDate = applicableDate;
     }
 
-    public float getMinTemp() {
-        return minTemp;
+    public int getMinTemp() {
+        return (int) minTemp;
     }
 
     public void setMinTemp(float minTemp) {
         this.minTemp = minTemp;
     }
 
-    public float getMaxTemp() {
-        return maxTemp;
+    public int getMaxTemp() {
+        return (int) maxTemp;
     }
 
     public void setMaxTemp(float maxTemp) {
@@ -182,13 +185,13 @@ public class ConsolidatedWeather {
         this.humidity = humidity;
     }
 
-    public Object getVisibility() {
-        return visibility;
-    }
-
-    public void setVisibility(Object visibility) {
-        this.visibility = visibility;
-    }
+//    public Object getVisibility() {
+//        return visibility;
+//    }
+//
+//    public void setVisibility(Object visibility) {
+//        this.visibility = visibility;
+//    }
 
     public int getPredictability() {
         return predictability;

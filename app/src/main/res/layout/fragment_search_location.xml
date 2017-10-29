@@ -1,34 +1,75 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.android.weathernow.view.search.SearchLocationFragment"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    tools:context="com.example.android.weathernow.view.search.SearchLocationFragment">
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/drawerContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" >
-        <android.support.v7.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/cardContainer"
-            android:layout_margin="@dimen/cardview_margin">
-        <fragment
-            android:id="@+id/place_autocomplete_fragment"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:name="com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment"
-            />
-        </android.support.v7.widget.CardView>
+        android:orientation="vertical">
 
-        <android.support.v7.widget.RecyclerView
+        <android.support.v4.widget.DrawerLayout
+            android:id="@+id/drawer_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/weatherList"
-            android:layout_below="@+id/cardContainer"
-            android:layout_marginBottom="@dimen/search_location_margin"
-            android:layout_marginLeft="@dimen/search_location_margin"
-            android:layout_marginRight="@dimen/search_location_margin"
-            />
-    </RelativeLayout>
+            android:layout_height="match_parent">
+
+            <!-- This RelativeLayout represents the contents of the screen  -->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/cardContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/cardview_margin">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="50dp"
+                            android:src="@drawable/ic_menu_black_48px"
+                            android:id="@+id/menu"
+                            android:padding="@dimen/hamburger_icon_padding" />
+
+                        <fragment
+                            android:id="@+id/place_autocomplete_fragment"
+                            android:name="com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@id/menu"
+                            android:layout_alignBottom="@id/menu"
+                            android:layout_alignTop="@id/menu"/>
+                    </RelativeLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/weatherList"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/cardContainer"
+                    android:layout_marginBottom="@dimen/search_location_margin"
+                    android:layout_marginLeft="@dimen/search_location_margin"
+                    android:layout_marginRight="@dimen/search_location_margin" />
+            </RelativeLayout>
+
+            <!-- The navigation drawer that comes from the left -->
+            <!-- Note that `android:layout_gravity` needs to be set to 'start' -->
+            <android.support.design.widget.NavigationView
+                android:id="@+id/nvView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:background="@android:color/white"
+                app:menu="@menu/drawer_view" />
+
+        </android.support.v4.widget.DrawerLayout>
+
+    </LinearLayout>
 
 </layout>

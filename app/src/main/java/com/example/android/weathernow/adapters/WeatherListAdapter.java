@@ -28,6 +28,7 @@ import java.util.List;
 public class WeatherListAdapter extends RecyclerView.Adapter {
     List<ConsolidatedWeather> weatherList;
     Context context;
+    DetailHelper listener;
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.weather_item, parent, false);
@@ -62,6 +63,13 @@ public class WeatherListAdapter extends RecyclerView.Adapter {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onWeatherClickHandler(weather);
+            }
+        });
     }
 
     @Override
@@ -72,6 +80,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter {
     public WeatherListAdapter(Context context, List<ConsolidatedWeather> weatherList) {
         this.context = context;
         this.weatherList = weatherList;
+        listener = (DetailHelper) context;
     }
 
     public class WeatherViewHolder extends RecyclerView.ViewHolder {
@@ -86,5 +95,9 @@ public class WeatherListAdapter extends RecyclerView.Adapter {
             today = itemView.findViewById(R.id.today);
             date = itemView.findViewById(R.id.date);
         }
+    }
+
+    public interface DetailHelper {
+        public void onWeatherClickHandler(ConsolidatedWeather weather);
     }
 }

@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.example.android.weathernow.R;
+import com.example.android.weathernow.adapters.WeatherListAdapter;
+import com.example.android.weathernow.models.ConsolidatedWeather;
+import com.example.android.weathernow.view.detail.DetailWeatherFragment;
 import com.example.android.weathernow.view.search.SearchLocationFragment;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.AutocompleteFilter;
@@ -20,17 +23,20 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
 
-public class MainActivity extends AppCompatActivity implements HasSupportFragmentInjector {
+public class MainActivity extends AppCompatActivity implements HasSupportFragmentInjector, WeatherListAdapter.DetailHelper {
     private static final String TAG = "Main activity";
+    FragmentManager fragmentManager;
     @Inject
     DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
     SearchLocationFragment searchLocationFragment;
+    DetailWeatherFragment detailWeatherFragment;
     private static final String SEARCH_LOCATION_FRAGMENT = "search_location_fragment";
+    private static final String DEATIAL_WEATHER_FRAGMENT = "detail_weathe_fragment";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
         searchLocationFragment = (SearchLocationFragment) fragmentManager.findFragmentByTag(SEARCH_LOCATION_FRAGMENT);
 
         if(searchLocationFragment == null){
@@ -38,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
             fragmentManager
                     .beginTransaction()
                     .add(R.id.fragmentContainer, searchLocationFragment, SEARCH_LOCATION_FRAGMENT)
+                    .addToBackStack(SEARCH_LOCATION_FRAGMENT)
                     .commit();
         }
 
@@ -46,5 +53,14 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     @Override
     public AndroidInjector<Fragment> supportFragmentInjector() {
         return dispatchingAndroidInjector;
+    }
+
+    @Override
+    public void onWeatherClickHandler(ConsolidatedWeather weather) {
+        detailWeatherFragment = DetailWeatherFragment.newInstance(weather);
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, detailWeatherFragment)
+                .addToBackStack(DEATIAL_WEATHER_FRAGMENT)
+                .commit();
     }
 }
