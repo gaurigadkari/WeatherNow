@@ -1,14 +1,12 @@
 package com.example.android.weathernow.models;
 
-import android.arch.persistence.room.Entity;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Gauri Gadkari on 10/26/17.
  */
-@Entity
+
 public class Parent {
     @SerializedName("title")
     @Expose

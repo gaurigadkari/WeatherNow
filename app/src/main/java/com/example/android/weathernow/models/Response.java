@@ -1,8 +1,5 @@
 package com.example.android.weathernow.models;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -11,9 +8,7 @@ import java.util.List;
 /**
  * Created by Gauri Gadkari on 10/26/17.
  */
-@Entity(tableName = "locations")
 public class Response {
-    @Ignore
     @SerializedName("consolidated_weather")
     @Expose
     private List<ConsolidatedWeather> consolidatedWeather = null;
@@ -29,11 +24,9 @@ public class Response {
     @SerializedName("timezone_name")
     @Expose
     private String timezoneName;
-    @Ignore
     @SerializedName("parent")
     @Expose
     private Parent parent;
-    @Ignore
     @SerializedName("sources")
     @Expose
     private List<Source> sources = null;

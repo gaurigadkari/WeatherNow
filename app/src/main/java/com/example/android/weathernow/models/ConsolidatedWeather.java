@@ -3,7 +3,9 @@ package com.example.android.weathernow.models;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -13,9 +15,10 @@ import com.google.gson.annotations.SerializedName;
  */
 @Entity(foreignKeys = @ForeignKey(entity = Location.class,
         parentColumns = "woeid",
-        childColumns = "location_woeid"))
+        childColumns = "location_woeid"), tableName = "weather")
 public class ConsolidatedWeather {
     @PrimaryKey
+    @NonNull
     @SerializedName("id")
     @Expose
     private String id;
@@ -55,6 +58,7 @@ public class ConsolidatedWeather {
     @SerializedName("humidity")
     @Expose
     private int humidity;
+    @Ignore
     @SerializedName("visibility")
     @Expose
     private Object visibility;

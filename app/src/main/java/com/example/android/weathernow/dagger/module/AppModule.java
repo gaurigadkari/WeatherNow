@@ -1,7 +1,11 @@
 package com.example.android.weathernow.dagger.module;
 
 import android.app.Application;
+import android.arch.persistence.room.Room;
 
+import com.example.android.weathernow.db.LocationDao;
+import com.example.android.weathernow.db.WeatherDao;
+import com.example.android.weathernow.db.WeatherDb;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -50,5 +54,19 @@ public class AppModule {
                 .baseUrl("https://www.metaweather.com/api/")
                 .client(okHttpClient)
                 .build();
+    }
+
+
+    @Singleton @Provides
+    WeatherDb provideDb(Application app) {
+        return Room.databaseBuilder(app, WeatherDb.class,"weatherapp.db").build();
+    }
+    @Singleton @Provides
+    WeatherDao provideWeatherDao(WeatherDb db) {
+        return db.weatherDao();
+    }
+    @Singleton @Provides
+    LocationDao provideLocationDao(WeatherDb db) {
+        return db.locationDao();
     }
 }
