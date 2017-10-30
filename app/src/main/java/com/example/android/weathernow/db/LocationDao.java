@@ -16,6 +16,7 @@ import com.example.android.weathernow.models.Location;
 public interface LocationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Location location);
+
     @Query("SELECT * FROM location WHERE title = :location")
     LiveData<Location> findByLocationName(String location);
 }

@@ -1,5 +1,7 @@
 package com.example.android.weathernow.network;
 
+import android.arch.lifecycle.LiveData;
+
 import com.example.android.weathernow.models.Location;
 import com.example.android.weathernow.models.Response;
 
@@ -17,9 +19,8 @@ import retrofit2.http.Query;
 
 public interface WeatherApi {
     @GET("location/{woeid}")
-    Call<Response> getSearchResults(@Path("woeid") int woeid);
+    LiveData<ApiResponse<Response>> getSearchResults(@Path("woeid") int woeid);
 
     @GET("location/search/")
-    Call<List<Location>> getWoeid(@Query("query") String location);
-
+    LiveData<ApiResponse<List<Location>>> getWoeid(@Query("query") String location);
 }

@@ -1,6 +1,8 @@
 package com.example.android.weathernow.view.search;
 
 import android.Manifest;
+import android.arch.lifecycle.ViewModelProvider;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
@@ -26,7 +28,7 @@ import android.widget.Toast;
 
 
 import com.example.android.weathernow.R;
-import com.example.android.weathernow.Utilities;
+import com.example.android.weathernow.util.Utilities;
 import com.example.android.weathernow.adapters.WeatherListAdapter;
 import com.example.android.weathernow.dagger.utility.Injectable;
 import com.example.android.weathernow.databinding.FragmentSearchLocationBinding;
@@ -35,21 +37,15 @@ import com.example.android.weathernow.models.Location;
 import com.example.android.weathernow.models.Response;
 import com.example.android.weathernow.network.WeatherApi;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceDetectionClient;
 import com.google.android.gms.location.places.PlaceFilter;
 import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executor;
 
 import javax.inject.Inject;
 
@@ -67,23 +63,17 @@ public class SearchLocationFragment extends Fragment implements Injectable {
     List<ConsolidatedWeather> weatherList;
     WeatherListAdapter adapter;
     private DrawerLayout mDrawer;
-    private Toolbar toolbar;
     private NavigationView nvDrawer;
     AppCompatImageButton searchButton;
     ImageView hamburgerIcon;
-    @Inject
-    Retrofit retrofit;
     PlaceDetectionClient placeDetectionClient;
+    @Inject
+    ViewModelProvider.Factory viewModelFactory;
+    private SearchLocationViewModel searchLocationViewModel;
+
 
     public SearchLocationFragment() {
         // Required empty public constructor
-    }
-
-    public static SearchLocationFragment newInstance(String param1, String param2) {
-        SearchLocationFragment fragment = new SearchLocationFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -104,8 +94,9 @@ public class SearchLocationFragment extends Fragment implements Injectable {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        searchLocationViewModel = ViewModelProviders.of(this, viewModelFactory).get(SearchLocationViewModel.class);
         weatherList = new ArrayList<>();
         rvWeatherList = binding.weatherList;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -147,6 +138,21 @@ public class SearchLocationFragment extends Fragment implements Injectable {
             public void onError(Status status) {
                 // TODO: Handle the error.
                 Log.i(TAG, "An error occurred: " + status);
+            }
+        });
+
+        searchLocationViewModel.getLocationList().observe(this, result -> {
+            Log.d(TAG,"Observer" + result);
+        });
+
+        searchLocationViewModel.getConsolidatedWeather().observe(this, result -> {
+            Log.d(TAG,"Observer" + result);
+            if( result != null
+                    && result.status == com.example.android.weathernow.models.Status.SUCCESS
+                    && result.data != null){
+                weatherList.clear();
+                weatherList.addAll(result.data);
+                adapter.notifyDataSetChanged();
             }
         });
 
@@ -215,76 +221,18 @@ public class SearchLocationFragment extends Fragment implements Injectable {
         }
     }
 
-//    @Override
-//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        menu.clear();
-//        inflater.inflate(R.menu.search_menu, menu);
-//        MenuItem searchItem = menu.findItem(R.id.action_search);
-//        final SearchView searchView = (SearchView) searchItem.getActionView();
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                searchQuery = query;
-//                search(query);
-//                searchView.clearFocus();
-//                searchView.setQuery("", false);
-//                return true;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                return false;
-//            }
-//        });
-//        super.onCreateOptionsMenu(menu, inflater);
-//    }
-
-
-
     private void search(String query) {
         if (query.length() == 0) {
             Snackbar.make(rvWeatherList, R.string.empty_search, Toast.LENGTH_LONG).show();
         }
 
         if (Utilities.isNetworkAvailable(getContext()) && Utilities.isOnline()) {
-            retroNetworkCall(query);
+            searchLocationViewModel.setPlace(query);
         } else {
             Snackbar.make(rvWeatherList, R.string.device_offline, Snackbar.LENGTH_LONG).show();
         }
     }
 
-    private void retroNetworkCall(String location) {
-        //final int woeid;
-        Call<List<Location>> callWoeid = retrofit.create(WeatherApi.class).getWoeid(location);
-
-        callWoeid.enqueue(new Callback<List<Location>>() {
-            @Override
-            public void onResponse(Call<List<Location>> call, retrofit2.Response<List<Location>> response) {
-                Log.d("TAG", response.body() + "");
-                int woeid = response.body().get(0).getWoeid();
-                Call<Response> weatherCall = retrofit.create(WeatherApi.class).getSearchResults(woeid);
-                weatherCall.enqueue(new Callback<Response>() {
-                    @Override
-                    public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-                        weatherList.clear();
-                        List<ConsolidatedWeather> weatherArrayList = response.body().getConsolidatedWeather();
-                        weatherList.addAll(weatherArrayList);
-                        adapter.notifyDataSetChanged();
-                    }
-
-                    @Override
-                    public void onFailure(Call<Response> call, Throwable t) {
-
-                    }
-                });
-            }
-
-            @Override
-            public void onFailure(Call<List<Location>> call, Throwable t) {
-                Log.d("TAG", t.getMessage() + "");
-            }
-        });
-    }
 
     @Override
     public void onAttach(Context context) {

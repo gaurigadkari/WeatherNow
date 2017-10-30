@@ -1,4 +1,4 @@
-package com.example.android.weathernow;
+package com.example.android.weathernow.util;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

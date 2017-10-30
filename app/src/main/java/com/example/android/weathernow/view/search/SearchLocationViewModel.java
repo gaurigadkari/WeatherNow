@@ -7,7 +7,9 @@ import android.arch.lifecycle.ViewModel;
 
 import com.example.android.weathernow.models.ConsolidatedWeather;
 import com.example.android.weathernow.models.Location;
+import com.example.android.weathernow.models.Resource;
 import com.example.android.weathernow.repository.SearchLocationRepository;
+import com.example.android.weathernow.util.AbsentLiveData;
 
 import java.util.List;
 import java.util.Objects;
@@ -20,24 +22,23 @@ import javax.inject.Inject;
 
 public class SearchLocationViewModel extends ViewModel {
     private MutableLiveData<String> place = new MutableLiveData<>();
-    private LiveData<List<Location>> locationList;
-    private LiveData<List<ConsolidatedWeather>> weatherList;
+    private LiveData<Resource<Location>> locationList = new MutableLiveData<>();
+    private LiveData<Resource<List<ConsolidatedWeather>>> weatherList;
     @Inject
     public SearchLocationViewModel(SearchLocationRepository searchLocationRepository) {
-        if (locationList == null) {
-            locationList = new MutableLiveData<>();
-        } else {
-            locationList = searchLocationRepository.loadLocationData(place);
-        }
-        weatherList = Transformations.switchMap(locationList, locationList -> {
-            Location location = locationList.get(0);
-            LiveData<List<ConsolidatedWeather>> weatherData = null;
-            if (weatherData == null) {
-                weatherData = new MutableLiveData<>();
+        locationList = Transformations.switchMap(place, place -> {
+            if (place == null || place.trim().length() == 0) {
+                return AbsentLiveData.create();
             } else {
-                weatherData = searchLocationRepository.loadWeatherData(location.getWoeid());
+                return searchLocationRepository.loadLocationData(place);
             }
-            return weatherData;
+        });
+        weatherList = Transformations.switchMap(locationList, location -> {
+            if (location == null || location.data == null) {
+                return AbsentLiveData.create();
+            } else {
+                return searchLocationRepository.loadWeatherData(location.data.getWoeid());
+            }
         });
     }
     public void setPlace(String place) {
@@ -46,10 +47,10 @@ public class SearchLocationViewModel extends ViewModel {
         }
         this.place.setValue(place);
     }
-    public LiveData<List<ConsolidatedWeather>> getConsolidatedWeather() {
+    public LiveData<Resource<List<ConsolidatedWeather>>> getConsolidatedWeather() {
         return weatherList;
     }
-    public LiveData<List<Location>> getLocationList() {
+    public LiveData<Resource<Location>> getLocationList() {
         return locationList;
     }
 }

@@ -6,6 +6,8 @@ import android.arch.persistence.room.Room;
 import com.example.android.weathernow.db.LocationDao;
 import com.example.android.weathernow.db.WeatherDao;
 import com.example.android.weathernow.db.WeatherDb;
+import com.example.android.weathernow.network.WeatherApi;
+import com.example.android.weathernow.repository.LiveDataCallAdapterFactory;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -23,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Gauri Gadkari on 10/28/17.
  */
 
-@Module
+@Module(includes = ViewModelModule.class)
 public class AppModule {
     @Provides
     @Singleton
@@ -48,12 +50,13 @@ public class AppModule {
     }
     @Provides
     @Singleton
-    Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
+    WeatherApi provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .baseUrl("https://www.metaweather.com/api/")
-                .client(okHttpClient)
-                .build();
+                .addCallAdapterFactory(new LiveDataCallAdapterFactory())
+                .build()
+                .create(WeatherApi.class);
     }
 
 

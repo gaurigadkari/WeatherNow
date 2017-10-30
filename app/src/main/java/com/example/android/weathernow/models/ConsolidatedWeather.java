@@ -15,9 +15,7 @@ import org.parceler.Parcel;
 /**
  * Created by Gauri Gadkari on 10/26/17.
  */
-@Entity(foreignKeys = @ForeignKey(entity = Location.class,
-        parentColumns = "woeid",
-        childColumns = "location_woeid"), tableName = "weather")
+@Entity(tableName = "weather")
 @Parcel
 public class ConsolidatedWeather {
     @PrimaryKey
@@ -129,24 +127,24 @@ public class ConsolidatedWeather {
         this.applicableDate = applicableDate;
     }
 
-    public int getMinTemp() {
-        return (int) minTemp;
+    public float getMinTemp() {
+        return minTemp;
     }
 
     public void setMinTemp(float minTemp) {
         this.minTemp = minTemp;
     }
 
-    public int getMaxTemp() {
-        return (int) maxTemp;
+    public float getMaxTemp() {
+        return maxTemp;
     }
 
     public void setMaxTemp(float maxTemp) {
         this.maxTemp = maxTemp;
     }
 
-    public int getTheTemp() {
-        return (int)theTemp;
+    public float getTheTemp() {
+        return theTemp;
     }
 
     public void setTheTemp(float theTemp) {
