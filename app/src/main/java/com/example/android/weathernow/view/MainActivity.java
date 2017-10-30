@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     SearchLocationFragment searchLocationFragment;
     DetailWeatherFragment detailWeatherFragment;
     private static final String SEARCH_LOCATION_FRAGMENT = "search_location_fragment";
-    private static final String DEATIAL_WEATHER_FRAGMENT = "detail_weathe_fragment";
+    private static final String DETAIL_WEATHER_FRAGMENT = "detail_weather_fragment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,8 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     public void onWeatherClickHandler(ConsolidatedWeather weather) {
         detailWeatherFragment = DetailWeatherFragment.newInstance(weather);
         fragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, detailWeatherFragment)
+                .add(R.id.fragmentContainer, detailWeatherFragment)
+                .addToBackStack(DETAIL_WEATHER_FRAGMENT)
                 .commit();
     }
 }
