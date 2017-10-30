@@ -3,20 +3,25 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/get_weather_first"
-            android:title="First" />
+            android:id="@+id/get_weather_1"
+            android:title="First"
+            android:visible="false" />
         <item
-            android:id="@+id/get_weather_second"
-            android:title="Second" />
+            android:id="@+id/get_weather_2"
+            android:title="Second"
+            android:visible="false" />
         <item
-            android:id="@+id/get_weather_third"
-            android:title="Third" />
+            android:id="@+id/get_weather_3"
+            android:title="Third"
+            android:visible="false" />
         <item
-            android:id="@+id/get_weather_fouth"
-            android:title="Fourth" />
+            android:id="@+id/get_weather_4"
+            android:title="Fourth"
+            android:visible="false" />
         <item
-            android:id="@+id/get_weather_fifth"
-            android:title="Fifth" />
+            android:id="@+id/get_weather_5"
+            android:title="Fifth"
+            android:visible="false" />
 
     </group>
 </menu>

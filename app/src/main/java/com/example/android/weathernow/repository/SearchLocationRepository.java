@@ -19,6 +19,7 @@ import com.example.android.weathernow.network.WeatherApi;
 import com.example.android.weathernow.util.AbsentLiveData;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -51,7 +52,11 @@ public class SearchLocationRepository {
             protected void saveCallResult(@NonNull List<Location> item) {
                 db.beginTransaction();
                 try {
-                    locationDao.insert(item.get(0));
+                    Location location = item.get(0);
+                    if (location != null) {
+                        location.setSearchTime(new Date().getTime());
+                    }
+                    locationDao.insert(location);
                     db.setTransactionSuccessful();
                 } finally {
                     db.endTransaction();
@@ -120,6 +125,10 @@ public class SearchLocationRepository {
                 return weatherApi.getSearchResults(woeid);
             }
         }.asLiveData();
+    }
+
+    public LiveData<List<Location>> getMostRecentSearches() {
+        return locationDao.findRecentFive();
     }
 }
 

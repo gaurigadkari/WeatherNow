@@ -24,6 +24,7 @@ public class SearchLocationViewModel extends ViewModel {
     private MutableLiveData<String> place = new MutableLiveData<>();
     private LiveData<Resource<Location>> locationList = new MutableLiveData<>();
     private LiveData<Resource<List<ConsolidatedWeather>>> weatherList;
+    private LiveData<List<Location>> recentLocationList = new MutableLiveData<>();
 
     @Inject
     public SearchLocationViewModel(SearchLocationRepository searchLocationRepository) {
@@ -41,6 +42,8 @@ public class SearchLocationViewModel extends ViewModel {
                 return searchLocationRepository.loadWeatherData(location.data.getWoeid());
             }
         });
+
+        recentLocationList = searchLocationRepository.getMostRecentSearches();
     }
 
     public void setPlace(String place) {
@@ -56,5 +59,9 @@ public class SearchLocationViewModel extends ViewModel {
 
     public LiveData<Resource<Location>> getLocationList() {
         return locationList;
+    }
+
+    public LiveData<List<Location>> getRecentLocationList() {
+        return recentLocationList;
     }
 }

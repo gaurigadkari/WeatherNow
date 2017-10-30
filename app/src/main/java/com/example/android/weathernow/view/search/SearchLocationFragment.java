@@ -20,9 +20,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.weathernow.R;
@@ -30,6 +32,7 @@ import com.example.android.weathernow.adapters.WeatherListAdapter;
 import com.example.android.weathernow.dagger.utility.Injectable;
 import com.example.android.weathernow.databinding.FragmentSearchLocationBinding;
 import com.example.android.weathernow.models.ConsolidatedWeather;
+import com.example.android.weathernow.models.Location;
 import com.example.android.weathernow.util.Utilities;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.AutocompleteFilter;
@@ -55,13 +58,14 @@ public class SearchLocationFragment extends Fragment implements Injectable {
     WeatherListAdapter adapter;
     private DrawerLayout mDrawer;
     private NavigationView nvDrawer;
+    Menu menuNav;
     AppCompatImageButton searchButton;
     ImageView hamburgerIcon;
     PlaceDetectionClient placeDetectionClient;
     @Inject
     ViewModelProvider.Factory viewModelFactory;
     private SearchLocationViewModel searchLocationViewModel;
-
+    TextView locSearch;
 
     public SearchLocationFragment() {
         // Required empty public constructor
@@ -97,10 +101,15 @@ public class SearchLocationFragment extends Fragment implements Injectable {
         // setting the visibility of default search icon for place autocomplete search to Gone
         searchButton = getView().findViewById(R.id.place_autocomplete_search_button);
         searchButton.setVisibility(View.GONE);
+        locSearch = getView().findViewById(R.id.place_autocomplete_search_input);
         hamburgerIcon = binding.menu;
+        nvDrawer = binding.nvView;
+        setupDrawerContent(nvDrawer);
+        menuNav = nvDrawer.getMenu();
         hamburgerIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 mDrawer.openDrawer(GravityCompat.START);
             }
         });
@@ -132,6 +141,13 @@ public class SearchLocationFragment extends Fragment implements Injectable {
             }
         });
 
+        searchLocationViewModel.getRecentLocationList().observe(this, result -> {
+            if (result != null && result.size() > 0) {
+                updateNavigationDrawer(result);
+            }
+        });
+
+
         searchLocationViewModel.getLocationList().observe(this, result -> {
             Log.d(TAG, "Observer" + result);
         });
@@ -147,6 +163,72 @@ public class SearchLocationFragment extends Fragment implements Injectable {
             }
         });
 
+    }
+
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(menuItem -> {
+            searchLocationViewModel.setPlace(menuItem.getTitle().toString());
+            locSearch.setText(menuItem.getTitle().toString());
+            mDrawer.closeDrawer(GravityCompat.START);
+            return true;
+        });
+    }
+
+
+    private void updateNavigationDrawer(List<Location> recentSearches) {
+        resetRecentSearchItems();
+        for (int i = 0; i < recentSearches.size(); i++) {
+            switch (i + 1) {
+                case 1:
+                    menuNav.findItem(R.id.get_weather_1)
+                            .setTitle(recentSearches.get(i).getTitle())
+                            .setVisible(true);
+                    break;
+                case 2:
+                    menuNav.findItem(R.id.get_weather_2)
+                            .setTitle(recentSearches.get(i).getTitle())
+                            .setVisible(true);
+                    break;
+                case 3:
+                    menuNav.findItem(R.id.get_weather_3)
+                            .setTitle(recentSearches.get(i).getTitle())
+                            .setVisible(true);
+                    break;
+                case 4:
+                    menuNav.findItem(R.id.get_weather_4)
+                            .setTitle(recentSearches.get(i).getTitle())
+                            .setVisible(true);
+                    break;
+                case 5:
+                    menuNav.findItem(R.id.get_weather_5)
+                            .setTitle(recentSearches.get(i).getTitle())
+                            .setVisible(true);
+                    break;
+            }
+
+        }
+    }
+
+    private void resetRecentSearchItems() {
+        for (int i = 1; i <= 5; i++) {
+            switch (i) {
+                case 1:
+                    menuNav.findItem(R.id.get_weather_1).setTitle("");
+                    break;
+                case 2:
+                    menuNav.findItem(R.id.get_weather_2).setTitle("");
+                    break;
+                case 3:
+                    menuNav.findItem(R.id.get_weather_3).setTitle("");
+                    break;
+                case 4:
+                    menuNav.findItem(R.id.get_weather_4).setTitle("");
+                    break;
+                case 5:
+                    menuNav.findItem(R.id.get_weather_5).setTitle("");
+                    break;
+            }
+        }
     }
 
     public void getLocation() {

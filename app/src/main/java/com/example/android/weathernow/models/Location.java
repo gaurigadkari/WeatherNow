@@ -27,28 +27,46 @@ public class Location {
     @Expose
     @ColumnInfo(name = "latt_long")
     private String lattLong;
+    @ColumnInfo(name = "search_time")
+    private long searchTime;
+
     public String getTitle() {
         return title;
     }
+
     public void setTitle(String title) {
         this.title = title;
     }
+
     public String getLocationType() {
         return locationType;
     }
+
     public void setLocationType(String locationType) {
         this.locationType = locationType;
     }
+
     public int getWoeid() {
         return woeid;
     }
+
     public void setWoeid(int woeid) {
         this.woeid = woeid;
     }
+
     public String getLattLong() {
         return lattLong;
     }
+
     public void setLattLong(String lattLong) {
         this.lattLong = lattLong;
+    }
+
+    public long getSearchTime() {
+        return searchTime;
+    }
+
+    public void setSearchTime(long searchTime) {
+        this.searchTime = searchTime;
     }
 }
