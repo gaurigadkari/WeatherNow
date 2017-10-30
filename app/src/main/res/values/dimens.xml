@@ -11,4 +11,13 @@
     <dimen name="detail_relative_layout_padding">20dp</dimen>
     <dimen name="weather_item_textview_marginbottom">4dp</dimen>
     <dimen name="hamburger_icon_padding">4dp</dimen>
+    <dimen name="drawer_margin">4dp</dimen>
+    <dimen name="navigation_header_fontsize">20sp</dimen>
+    <dimen name="navigation_header_height">192dp</dimen>
+    <dimen name="detail_fragement_temp_fontsize">32sp</dimen>
+    <dimen name="detail_fragement_attributes_fontsize">16sp</dimen>
+    <dimen name="detail_fragment_weather_state_name_fontsize">18sp</dimen>
+    <dimen name="detail_fragment_weather_state_temp_leftmargin">16dp</dimen>
+    <dimen name="detail_fragment_icon_rightmargin">16dp</dimen>
+    <dimen name="detail_frament_icon_topmargin">8dp</dimen>
 </resources>

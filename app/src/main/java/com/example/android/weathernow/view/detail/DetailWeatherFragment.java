@@ -6,7 +6,6 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -25,6 +24,11 @@ import com.example.android.weathernow.view.search.SharedSearchDetailViewModel;
 
 import org.parceler.Parcels;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import javax.inject.Inject;
 
 /**
@@ -33,7 +37,7 @@ import javax.inject.Inject;
 public class DetailWeatherFragment extends Fragment implements Injectable {
     FragmentDetailWeatherBinding binding;
     android.support.v7.widget.Toolbar toolbar;
-    TextView weatherStateName, temperature, maxTemp, minTemp, humidity, today, date;
+    TextView weatherStateName, temperature, maxTemp, minTemp, windSpeed, windDirection, today, date;
     ImageView weatherStateIcon;
     private static final String WEATHER = "weather";
     private static final String LOCATION_TITLE = "location_title";
@@ -77,7 +81,8 @@ public class DetailWeatherFragment extends Fragment implements Injectable {
         sharedSearchDetailViewModel = ViewModelProviders.of(this, viewModelFactory).get(SharedSearchDetailViewModel.class);
         weatherStateName = binding.weatherStateName;
         temperature = binding.temp;
-        humidity = binding.humidity;
+        windSpeed = binding.windSpeed;
+        windDirection = binding.windDirection;
         maxTemp = binding.maxTemp;
         minTemp = binding.minTemp;
         toolbar = binding.toolbar;
@@ -86,7 +91,18 @@ public class DetailWeatherFragment extends Fragment implements Injectable {
         temperature.setText(Utilities.getDisplayableTemp(weather.getTheTemp()) + "°C");
         minTemp.setText(Utilities.getDisplayableTemp(weather.getMinTemp()) + "°C");
         maxTemp.setText(Utilities.getDisplayableTemp(weather.getMaxTemp()) + "°C");
-        toolbar.setTitle(locationTitle + " " + weather.getApplicableDate());
+        windSpeed.setText(weather.getWindSpeed() + "");
+        windDirection.setText(weather.getWindDirectionCompass() + "");
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date = formatter.parse(weather.getApplicableDate());
+            String newDate = new SimpleDateFormat("dd-MMM").format(date);
+            toolbar.setTitle(locationTitle + " " + newDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
         Glide.with(getContext()).load(weather.getWeatherIconPath()).into(weatherStateIcon);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 

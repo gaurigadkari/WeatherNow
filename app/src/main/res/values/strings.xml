@@ -12,5 +12,9 @@
     <string name="permision_available_location">Location Permissions have been granted. Showing current Weather.</string>
     <string name="permissions_not_granted">Permissions were not granted.</string>
     <string name="data_not_available">Data not available!!</string>
+    <string name="recent_search_history">Search History</string>
+    <string name="humidity">Humidity</string>
+    <string name="wind_speed">Wind Speed</string>
+    <string name="wind_direction">Wind Direction</string>
 
 </resources>

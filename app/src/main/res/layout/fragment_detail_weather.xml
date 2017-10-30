@@ -33,7 +33,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/weather_item_textview_marginbottom"
-                    android:textSize="18sp"
+                    android:layout_marginLeft="@dimen/detail_fragment_weather_state_temp_leftmargin"
+                    android:textSize="@dimen/detail_fragment_weather_state_name_fontsize"
                     android:textStyle="bold"
                     tools:text="Showers" />
 
@@ -43,24 +44,31 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/weather_state_name"
                     android:layout_marginBottom="@dimen/weather_item_textview_marginbottom"
-                    android:textSize="28sp"
+                    android:layout_marginLeft="@dimen/detail_fragment_weather_state_temp_leftmargin"
+                    android:textSize="@dimen/detail_fragement_temp_fontsize"
                     tools:text="77 F" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/humidity"/>
 
                 <TableLayout
                     android:id="@+id/tableLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@id/temp"
-                    >
+                    android:layout_below="@id/temp">
 
-                    <TableRow android:layout_height="wrap_content"
+                    <TableRow
                         android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:gravity="center">
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/detail_relative_layout_padding">
+                            android:layout_margin="@dimen/detail_relative_layout_padding"
+                            android:padding="@dimen/detail_relative_layout_padding">
 
                             <TextView
                                 android:id="@+id/maxTempLabel"
@@ -68,7 +76,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="@dimen/weather_item_textview_marginbottom"
                                 android:text="@string/max_temp"
-                                android:textSize="16sp" />
+                                android:textSize="@dimen/detail_fragement_attributes_fontsize"
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/maxTemp"
@@ -76,14 +85,15 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/maxTempLabel"
                                 android:layout_marginBottom="@dimen/weather_item_textview_marginbottom"
-                                android:textSize="16sp"
+                                android:textSize="@dimen/detail_fragement_attributes_fontsize"
                                 tools:text="77 F" />
                         </RelativeLayout>
 
                         <RelativeLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="@dimen/detail_relative_layout_padding">
+                            android:layout_margin="@dimen/detail_relative_layout_padding"
+                            android:padding="@dimen/detail_relative_layout_padding">
 
                             <TextView
                                 android:id="@+id/minTempLabel"
@@ -91,7 +101,8 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="@dimen/weather_item_textview_marginbottom"
                                 android:text="@string/min_temp"
-                                android:textSize="16sp" />
+                                android:textSize="@dimen/detail_fragement_attributes_fontsize"
+                                android:textStyle="bold" />
 
                             <TextView
                                 android:id="@+id/minTemp"
@@ -99,29 +110,77 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/minTempLabel"
                                 android:layout_marginBottom="@dimen/weather_item_textview_marginbottom"
-                                android:textSize="16sp"
+                                android:textSize="@dimen/detail_fragement_attributes_fontsize"
+                                tools:text="77 F" />
+                        </RelativeLayout>
+                    </TableRow>
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/detail_relative_layout_padding"
+                            android:padding="@dimen/detail_relative_layout_padding">
+
+                            <TextView
+                                android:id="@+id/windDirectionLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/weather_item_textview_marginbottom"
+                                android:text="@string/wind_direction"
+                                android:textSize="@dimen/detail_fragement_attributes_fontsize"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/windDirection"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/windDirectionLabel"
+                                android:layout_marginBottom="@dimen/weather_item_textview_marginbottom"
+                                android:textSize="@dimen/detail_fragement_attributes_fontsize"
+                                tools:text="77 F" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="@dimen/detail_relative_layout_padding"
+                            android:padding="@dimen/detail_relative_layout_padding">
+
+                            <TextView
+                                android:id="@+id/windSpeedLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/weather_item_textview_marginbottom"
+                                android:text="@string/wind_speed"
+                                android:textSize="@dimen/detail_fragement_attributes_fontsize"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/windSpeed"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/windSpeedLabel"
+                                android:layout_marginBottom="@dimen/weather_item_textview_marginbottom"
+                                android:textSize="@dimen/detail_fragement_attributes_fontsize"
                                 tools:text="77 F" />
                         </RelativeLayout>
                     </TableRow>
                 </TableLayout>
 
-                <TextView
-                    android:id="@+id/humidity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tableLayout"
-                    android:layout_marginBottom="@dimen/weather_item_textview_marginbottom"
-                    tools:text="56%" />
-
                 <ImageView
                     android:id="@+id/weather_state_icon"
                     android:layout_width="@dimen/weather_icon_dimensions"
                     android:layout_height="@dimen/weather_icon_dimensions"
-                    android:layout_alignParentRight="true" />
-
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/detail_fragment_icon_rightmargin" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 
     </RelativeLayout>
 
 </layout>
+
