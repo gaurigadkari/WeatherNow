@@ -150,6 +150,10 @@ public class SearchLocationFragment extends Fragment implements Injectable {
 
         searchLocationViewModel.getLocationList().observe(this, result -> {
             Log.d(TAG, "Observer" + result);
+            if(result.status == com.example.android.weathernow.models.Status.SUCCESS
+                    && result.data == null){
+                Snackbar.make(rvWeatherList, R.string.data_not_available, Snackbar.LENGTH_LONG).show();
+            }
         });
 
         searchLocationViewModel.getConsolidatedWeather().observe(this, result -> {

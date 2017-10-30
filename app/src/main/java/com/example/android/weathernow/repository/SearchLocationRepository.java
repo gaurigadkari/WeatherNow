@@ -52,12 +52,13 @@ public class SearchLocationRepository {
             protected void saveCallResult(@NonNull List<Location> item) {
                 db.beginTransaction();
                 try {
-                    Location location = item.get(0);
-                    if (location != null) {
+                    Location location = null;
+                    if (item != null && !item.isEmpty()) {
+                        location = item.get(0);
                         location.setSearchTime(new Date().getTime());
+                        locationDao.insert(location);
+                        db.setTransactionSuccessful();
                     }
-                    locationDao.insert(location);
-                    db.setTransactionSuccessful();
                 } finally {
                     db.endTransaction();
                 }
