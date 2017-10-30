@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
             fragmentManager
                     .beginTransaction()
                     .add(R.id.fragmentContainer, searchLocationFragment, SEARCH_LOCATION_FRAGMENT)
-                    .addToBackStack(SEARCH_LOCATION_FRAGMENT)
                     .commit();
         }
 
@@ -55,7 +54,6 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
         detailWeatherFragment = DetailWeatherFragment.newInstance(weather);
         fragmentManager.beginTransaction()
                 .replace(R.id.fragmentContainer, detailWeatherFragment)
-                .addToBackStack(DEATIAL_WEATHER_FRAGMENT)
                 .commit();
     }
 }

@@ -56,6 +56,13 @@
                     android:layout_marginBottom="@dimen/search_location_margin"
                     android:layout_marginLeft="@dimen/search_location_margin"
                     android:layout_marginRight="@dimen/search_location_margin" />
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:id="@+id/progressBar"
+                    android:visibility="gone"/>
             </RelativeLayout>
 
             <!-- The navigation drawer that comes from the left -->

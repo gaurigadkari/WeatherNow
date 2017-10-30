@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.example.android.weathernow.R;
 import com.example.android.weathernow.databinding.FragmentDetailWeatherBinding;
 import com.example.android.weathernow.models.ConsolidatedWeather;
+import com.example.android.weathernow.util.Utilities;
 
 import org.parceler.Parcels;
 
@@ -68,9 +69,9 @@ public class DetailWeatherFragment extends Fragment {
         toolbar = binding.toolbar;
         weatherStateIcon = binding.weatherStateIcon;
         weatherStateName.setText(weather.getWeatherStateName());
-        temperature.setText(weather.getTheTemp() + "°C");
-        minTemp.setText(weather.getMinTemp() + "°C");
-        maxTemp.setText(weather.getMaxTemp() + "°C");
+        temperature.setText(Utilities.getDisplayableTemp(weather.getTheTemp()) + "°C");
+        minTemp.setText(Utilities.getDisplayableTemp(weather.getMinTemp()) + "°C");
+        maxTemp.setText(Utilities.getDisplayableTemp(weather.getMaxTemp()) + "°C");
         toolbar.setTitle(weather.getApplicableDate());
         Glide.with(getContext()).load(weather.getWeatherIconPath()).into(weatherStateIcon);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);

@@ -24,6 +24,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,6 +67,7 @@ public class SearchLocationFragment extends Fragment implements Injectable {
     ViewModelProvider.Factory viewModelFactory;
     private SearchLocationViewModel searchLocationViewModel;
     TextView locSearch;
+    ProgressBar progressBar;
 
     public SearchLocationFragment() {
         // Required empty public constructor
@@ -103,6 +105,7 @@ public class SearchLocationFragment extends Fragment implements Injectable {
         searchButton.setVisibility(View.GONE);
         locSearch = getView().findViewById(R.id.place_autocomplete_search_input);
         hamburgerIcon = binding.menu;
+        progressBar = binding.progressBar;
         nvDrawer = binding.nvView;
         setupDrawerContent(nvDrawer);
         menuNav = nvDrawer.getMenu();
@@ -158,6 +161,9 @@ public class SearchLocationFragment extends Fragment implements Injectable {
 
         searchLocationViewModel.getConsolidatedWeather().observe(this, result -> {
             Log.d(TAG, "Observer" + result);
+            if(result != null && result.status == com.example.android.weathernow.models.Status.LOADING) {
+                progressBar.setVisibility(View.VISIBLE);
+            }
             if (result != null
                     && result.status == com.example.android.weathernow.models.Status.SUCCESS
                     && result.data != null) {
@@ -165,7 +171,11 @@ public class SearchLocationFragment extends Fragment implements Injectable {
                 weatherList.addAll(result.data);
                 adapter.notifyDataSetChanged();
             }
+            if(result != null && result.status != com.example.android.weathernow.models.Status.LOADING) {
+                progressBar.setVisibility(View.GONE);
+            }
         });
+
 
     }
 

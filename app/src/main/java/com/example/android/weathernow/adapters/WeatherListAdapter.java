@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.android.weathernow.R;
 import com.example.android.weathernow.models.ConsolidatedWeather;
+import com.example.android.weathernow.util.Utilities;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -44,7 +45,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ConsolidatedWeather weather = weatherList.get(position);
         ((WeatherViewHolder) holder).weatherStateName.setText(weather.getWeatherStateName());
-        ((WeatherViewHolder) holder).temperature.setText(weather.getTheTemp() + "°C");
+        ((WeatherViewHolder) holder).temperature.setText(Utilities.getDisplayableTemp(weather.getTheTemp()) + "°C");
         ((WeatherViewHolder) holder).humidity.setText("HUMIDITY " + weather.getHumidity() + "%");
         weather.setWeatherIconPath(weather.getWeatherStateAbbr());
         String path = weather.getWeatherIconPath();

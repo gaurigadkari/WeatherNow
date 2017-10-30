@@ -28,5 +28,8 @@ public class Utilities {
         return false;
     }
 
+    public static int getDisplayableTemp(float temp) {
+        return (int) temp;
+    }
 
 }
