@@ -131,5 +131,6 @@ public class SearchLocationRepository {
     public LiveData<List<Location>> getMostRecentSearches() {
         return locationDao.findRecentFive();
     }
+
 }
 

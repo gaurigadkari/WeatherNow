@@ -4,7 +4,7 @@ package com.example.android.weathernow.dagger.component;
  * Created by Gauri Gadkari on 10/29/17.
  */
 
-import com.example.android.weathernow.view.search.SearchLocationViewModel;
+import com.example.android.weathernow.view.search.SharedSearchDetailViewModel;
 
 import dagger.Subcomponent;
 
@@ -20,5 +20,5 @@ public interface ViewModelSubComponent {
         ViewModelSubComponent build();
     }
 
-    SearchLocationViewModel searchLocationViewModel();
+    SharedSearchDetailViewModel searchLocationViewModel();
 }

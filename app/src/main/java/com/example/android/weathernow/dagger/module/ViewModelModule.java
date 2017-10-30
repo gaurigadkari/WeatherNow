@@ -5,7 +5,7 @@ import android.arch.lifecycle.ViewModelProvider;
 
 import com.example.android.weathernow.dagger.ViewModelKey;
 import com.example.android.weathernow.view.WeatherViewModelFactory;
-import com.example.android.weathernow.view.search.SearchLocationViewModel;
+import com.example.android.weathernow.view.search.SharedSearchDetailViewModel;
 
 import dagger.Binds;
 import dagger.Module;
@@ -19,8 +19,8 @@ import dagger.multibindings.IntoMap;
 public abstract class ViewModelModule {
     @Binds
     @IntoMap
-    @ViewModelKey(SearchLocationViewModel.class)
-    abstract ViewModel bindSearchViewModel(SearchLocationViewModel searchViewModel);
+    @ViewModelKey(SharedSearchDetailViewModel.class)
+    abstract ViewModel bindSearchViewModel(SharedSearchDetailViewModel searchViewModel);
 
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(WeatherViewModelFactory factory);

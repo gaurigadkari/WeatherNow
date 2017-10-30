@@ -27,6 +27,16 @@ public class WeatherListAdapter extends RecyclerView.Adapter {
     List<ConsolidatedWeather> weatherList;
     Context context;
     DetailHelper listener;
+    String locationTitle;
+
+
+    public String getLocationTitle() {
+        return locationTitle;
+    }
+
+    public void setLocationTitle(String locationTitle) {
+        this.locationTitle = locationTitle;
+    }
 
     public WeatherListAdapter(Context context, List<ConsolidatedWeather> weatherList) {
         this.context = context;
@@ -72,7 +82,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onWeatherClickHandler(weather);
+                listener.onWeatherClickHandler(weather, locationTitle);
             }
         });
     }
@@ -98,6 +108,6 @@ public class WeatherListAdapter extends RecyclerView.Adapter {
     }
 
     public interface DetailHelper {
-        public void onWeatherClickHandler(ConsolidatedWeather weather);
+        public void onWeatherClickHandler(ConsolidatedWeather weather, String locationTitle);
     }
 }

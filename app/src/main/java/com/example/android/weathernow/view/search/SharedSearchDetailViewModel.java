@@ -20,14 +20,14 @@ import javax.inject.Inject;
  * Created by Gauri Gadkari on 10/28/17.
  */
 
-public class SearchLocationViewModel extends ViewModel {
+public class SharedSearchDetailViewModel extends ViewModel {
     private MutableLiveData<String> place = new MutableLiveData<>();
     private LiveData<Resource<Location>> locationList = new MutableLiveData<>();
     private LiveData<Resource<List<ConsolidatedWeather>>> weatherList;
     private LiveData<List<Location>> recentLocationList = new MutableLiveData<>();
 
     @Inject
-    public SearchLocationViewModel(SearchLocationRepository searchLocationRepository) {
+    public SharedSearchDetailViewModel(SearchLocationRepository searchLocationRepository) {
         locationList = Transformations.switchMap(place, place -> {
             if (place == null || place.trim().length() == 0) {
                 return AbsentLiveData.create();
@@ -45,6 +45,7 @@ public class SearchLocationViewModel extends ViewModel {
 
         recentLocationList = searchLocationRepository.getMostRecentSearches();
     }
+
 
     public void setPlace(String place) {
         if (Objects.equals(this.place.getValue(), place)) {
@@ -64,4 +65,6 @@ public class SearchLocationViewModel extends ViewModel {
     public LiveData<List<Location>> getRecentLocationList() {
         return recentLocationList;
     }
+
+
 }

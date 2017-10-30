@@ -1,6 +1,7 @@
 package com.example.android.weathernow.db;
 
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
@@ -18,9 +19,6 @@ import java.util.List;
 public interface LocationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Location location);
-
-    @Query("SELECT * FROM location WHERE title = :woeid")
-    LiveData<Location> findByLocationWoeid(int woeid);
 
     @Query("SELECT * FROM location WHERE title = :location")
     LiveData<Location> findByLocationName(String location);

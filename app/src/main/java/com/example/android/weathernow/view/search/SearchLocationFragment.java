@@ -65,7 +65,7 @@ public class SearchLocationFragment extends Fragment implements Injectable {
     PlaceDetectionClient placeDetectionClient;
     @Inject
     ViewModelProvider.Factory viewModelFactory;
-    private SearchLocationViewModel searchLocationViewModel;
+    private SharedSearchDetailViewModel sharedSearchDetailViewModel;
     TextView locSearch;
     ProgressBar progressBar;
 
@@ -93,7 +93,7 @@ public class SearchLocationFragment extends Fragment implements Injectable {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        searchLocationViewModel = ViewModelProviders.of(this, viewModelFactory).get(SearchLocationViewModel.class);
+        sharedSearchDetailViewModel = ViewModelProviders.of(this, viewModelFactory).get(SharedSearchDetailViewModel.class);
         weatherList = new ArrayList<>();
         rvWeatherList = binding.weatherList;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
@@ -134,6 +134,7 @@ public class SearchLocationFragment extends Fragment implements Injectable {
             @Override
             public void onPlaceSelected(Place place) {
                 search(place.getName().toString());
+                adapter.setLocationTitle(place.getName().toString());
                 Log.i(TAG, "Place: " + place.getName());
             }
 
@@ -144,22 +145,24 @@ public class SearchLocationFragment extends Fragment implements Injectable {
             }
         });
 
-        searchLocationViewModel.getRecentLocationList().observe(this, result -> {
+        sharedSearchDetailViewModel.getRecentLocationList().observe(this, result -> {
             if (result != null && result.size() > 0) {
                 updateNavigationDrawer(result);
             }
         });
 
 
-        searchLocationViewModel.getLocationList().observe(this, result -> {
+        sharedSearchDetailViewModel.getLocationList().observe(this, result -> {
             Log.d(TAG, "Observer" + result);
             if(result.status == com.example.android.weathernow.models.Status.SUCCESS
                     && result.data == null){
+                weatherList.clear();
+                adapter.notifyDataSetChanged();
                 Snackbar.make(rvWeatherList, R.string.data_not_available, Snackbar.LENGTH_LONG).show();
             }
         });
 
-        searchLocationViewModel.getConsolidatedWeather().observe(this, result -> {
+        sharedSearchDetailViewModel.getConsolidatedWeather().observe(this, result -> {
             Log.d(TAG, "Observer" + result);
             if(result != null && result.status == com.example.android.weathernow.models.Status.LOADING) {
                 progressBar.setVisibility(View.VISIBLE);
@@ -181,8 +184,9 @@ public class SearchLocationFragment extends Fragment implements Injectable {
 
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(menuItem -> {
-            searchLocationViewModel.setPlace(menuItem.getTitle().toString());
+            sharedSearchDetailViewModel.setPlace(menuItem.getTitle().toString());
             locSearch.setText(menuItem.getTitle().toString());
+            adapter.setLocationTitle(menuItem.getTitle().toString());
             mDrawer.closeDrawer(GravityCompat.START);
             return true;
         });
@@ -314,7 +318,7 @@ public class SearchLocationFragment extends Fragment implements Injectable {
         }
 
         if (Utilities.isNetworkAvailable(getContext()) && Utilities.isOnline()) {
-            searchLocationViewModel.setPlace(query);
+            sharedSearchDetailViewModel.setPlace(query);
         } else {
             Snackbar.make(rvWeatherList, R.string.device_offline, Snackbar.LENGTH_LONG).show();
         }

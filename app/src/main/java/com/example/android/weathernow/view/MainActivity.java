@@ -50,8 +50,8 @@ public class MainActivity extends AppCompatActivity implements HasSupportFragmen
     }
 
     @Override
-    public void onWeatherClickHandler(ConsolidatedWeather weather) {
-        detailWeatherFragment = DetailWeatherFragment.newInstance(weather);
+    public void onWeatherClickHandler(ConsolidatedWeather weather, String locationTitle) {
+        detailWeatherFragment = DetailWeatherFragment.newInstance(weather, locationTitle);
         fragmentManager.beginTransaction()
                 .add(R.id.fragmentContainer, detailWeatherFragment)
                 .addToBackStack(DETAIL_WEATHER_FRAGMENT)
