@@ -33,7 +33,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/weather_item_textview_marginbottom"
-                    android:layout_marginStart="@dimen/detail_fragment_weather_state_temp_leftmargin"
+                    android:layout_marginLeft="@dimen/detail_fragment_weather_state_temp_leftmargin"
                     android:textSize="@dimen/detail_fragment_weather_state_name_fontsize"
                     android:textStyle="bold"
                     tools:text="Showers" />
@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/weather_state_name"
                     android:layout_marginBottom="@dimen/weather_item_textview_marginbottom"
-                    android:layout_marginStart="@dimen/detail_fragment_weather_state_temp_leftmargin"
+                    android:layout_marginLeft="@dimen/detail_fragment_weather_state_temp_leftmargin"
                     android:textSize="@dimen/detail_fragement_temp_fontsize"
                     tools:text="77 F" />
 
@@ -171,12 +171,12 @@
                     </TableRow>
                 </TableLayout>
 
-                <ImageView android:contentDescription="@string/weather_state_icon"
+                <ImageView
                     android:id="@+id/weather_state_icon"
                     android:layout_width="@dimen/weather_icon_dimensions"
                     android:layout_height="@dimen/weather_icon_dimensions"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="@dimen/detail_fragment_icon_rightmargin" />
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/detail_fragment_icon_rightmargin" />
             </RelativeLayout>
         </android.support.v7.widget.CardView>
 

@@ -2,6 +2,8 @@ package com.example.android.weathernow.models;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
@@ -18,6 +20,7 @@ import org.parceler.Parcel;
 @Parcel
 public class ConsolidatedWeather {
     @PrimaryKey
+    @NonNull
     @SerializedName("id")
     @Expose
     private String id;

@@ -31,7 +31,6 @@
                         android:layout_height="wrap_content">
 
                         <ImageView
-                            android:contentDescription="@string/hamburger_icon"
                             android:id="@+id/menu"
                             android:layout_width="wrap_content"
                             android:layout_height="50dp"
@@ -45,7 +44,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignBottom="@id/menu"
                             android:layout_alignTop="@id/menu"
-                            android:layout_toEndOf="@id/menu" />
+                            android:layout_toRightOf="@id/menu" />
                     </RelativeLayout>
                 </android.support.v7.widget.CardView>
 

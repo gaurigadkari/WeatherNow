@@ -21,6 +21,9 @@ public class Objects {
         if (o1 == null) {
             return o2 == null;
         }
-        return o2 != null && o1.equals(o2);
+        if (o2 == null) {
+            return false;
+        }
+        return o1.equals(o2);
     }
 }

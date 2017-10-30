@@ -21,9 +21,9 @@ import javax.inject.Inject;
  */
 
 public class SharedSearchDetailViewModel extends ViewModel {
-    private final MutableLiveData<String> place = new MutableLiveData<>();
+    private MutableLiveData<String> place = new MutableLiveData<>();
     private LiveData<Resource<Location>> locationList = new MutableLiveData<>();
-    private final LiveData<Resource<List<ConsolidatedWeather>>> weatherList;
+    private LiveData<Resource<List<ConsolidatedWeather>>> weatherList;
     private LiveData<List<Location>> recentLocationList = new MutableLiveData<>();
 
     @Inject

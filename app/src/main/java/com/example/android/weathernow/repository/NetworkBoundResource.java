@@ -21,7 +21,7 @@ import com.example.android.weathernow.util.Objects;
  * @param <ResultType>
  * @param <RequestType>
  */
-abstract class NetworkBoundResource<ResultType, RequestType> {
+public abstract class NetworkBoundResource<ResultType, RequestType> {
     private final AppExecutors appExecutors;
     private final MediatorLiveData<Resource<ResultType>> result = new MediatorLiveData<>();
 
@@ -74,7 +74,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
         });
     }
 
-    private void onFetchFailed() {
+    protected void onFetchFailed() {
     }
 
     public LiveData<Resource<ResultType>> asLiveData() {
@@ -82,7 +82,7 @@ abstract class NetworkBoundResource<ResultType, RequestType> {
     }
 
     @WorkerThread
-    private RequestType processResponse(ApiResponse<RequestType> response) {
+    protected RequestType processResponse(ApiResponse<RequestType> response) {
         return response.body;
     }
 

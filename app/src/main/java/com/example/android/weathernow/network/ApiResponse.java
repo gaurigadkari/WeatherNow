@@ -26,13 +26,13 @@ public class ApiResponse<T> {
             .compile("<([^>]*)>[\\s]*;[\\s]*rel=\"([a-zA-Z0-9]+)\"");
     private static final Pattern PAGE_PATTERN = Pattern.compile("\\bpage=(\\d+)");
     private static final String NEXT_LINK = "next";
-    private final int code;
+    public final int code;
     @Nullable
     public final T body;
     @Nullable
     public final String errorMessage;
     @NonNull
-    private final Map<String, String> links;
+    public final Map<String, String> links;
 
     public ApiResponse(Throwable error) {
         code = 500;

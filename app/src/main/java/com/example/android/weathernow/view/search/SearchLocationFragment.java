@@ -51,23 +51,23 @@ import javax.inject.Inject;
 
 public class SearchLocationFragment extends Fragment implements Injectable {
     private static final String TAG = "SearchLocationFragment";
-    private static final String[] PERMISSIONS_LOCATION = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
+    private static String[] PERMISSIONS_LOCATION = {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION};
     private static final int REQUEST_LOCATION = 1002;
-    private FragmentSearchLocationBinding binding;
-    private RecyclerView rvWeatherList;
-    private List<ConsolidatedWeather> weatherList;
-    private WeatherListAdapter adapter;
+    FragmentSearchLocationBinding binding;
+    RecyclerView rvWeatherList;
+    List<ConsolidatedWeather> weatherList;
+    WeatherListAdapter adapter;
     private DrawerLayout mDrawer;
-    private Menu menuNav;
-    private AppCompatImageButton searchButton;
-    private ImageView hamburgerIcon;
-    private PlaceDetectionClient placeDetectionClient;
+    private NavigationView nvDrawer;
+    Menu menuNav;
+    AppCompatImageButton searchButton;
+    ImageView hamburgerIcon;
+    PlaceDetectionClient placeDetectionClient;
     @Inject
-    private
     ViewModelProvider.Factory viewModelFactory;
     private SharedSearchDetailViewModel sharedSearchDetailViewModel;
-    private TextView locSearch;
-    private ProgressBar progressBar;
+    TextView locSearch;
+    ProgressBar progressBar;
 
     public SearchLocationFragment() {
         // Required empty public constructor
@@ -77,6 +77,8 @@ public class SearchLocationFragment extends Fragment implements Injectable {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        if (getArguments() != null) {
+        }
     }
 
     @Override
@@ -104,10 +106,16 @@ public class SearchLocationFragment extends Fragment implements Injectable {
         locSearch = getView().findViewById(R.id.place_autocomplete_search_input);
         hamburgerIcon = binding.menu;
         progressBar = binding.progressBar;
-        NavigationView nvDrawer = binding.nvView;
+        nvDrawer = binding.nvView;
         setupDrawerContent(nvDrawer);
         menuNav = nvDrawer.getMenu();
-        hamburgerIcon.setOnClickListener(v -> mDrawer.openDrawer(GravityCompat.START));
+        hamburgerIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mDrawer.openDrawer(GravityCompat.START);
+            }
+        });
 
         getLocation();
 
@@ -241,7 +249,7 @@ public class SearchLocationFragment extends Fragment implements Injectable {
         }
     }
 
-    private void getLocation() {
+    public void getLocation() {
         Log.i(TAG, "Show contacts button pressed. Checking permissions.");
 
         // Verify that all required contact permissions have been granted.
@@ -316,4 +324,14 @@ public class SearchLocationFragment extends Fragment implements Injectable {
         }
     }
 
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
 }

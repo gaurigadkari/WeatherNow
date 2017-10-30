@@ -19,12 +19,11 @@ import dagger.android.support.HasSupportFragmentInjector;
 
 public class MainActivity extends AppCompatActivity implements HasSupportFragmentInjector, WeatherListAdapter.DetailHelper {
     private static final String TAG = "Main activity";
-    private FragmentManager fragmentManager;
+    FragmentManager fragmentManager;
     @Inject
-    private
     DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
-    private SearchLocationFragment searchLocationFragment;
-    private DetailWeatherFragment detailWeatherFragment;
+    SearchLocationFragment searchLocationFragment;
+    DetailWeatherFragment detailWeatherFragment;
     private static final String SEARCH_LOCATION_FRAGMENT = "search_location_fragment";
     private static final String DETAIL_WEATHER_FRAGMENT = "detail_weather_fragment";
 

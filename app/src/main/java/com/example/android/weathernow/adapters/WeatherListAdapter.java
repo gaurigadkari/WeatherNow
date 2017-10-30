@@ -24,10 +24,10 @@ import java.util.List;
  */
 
 public class WeatherListAdapter extends RecyclerView.Adapter {
-    private final List<ConsolidatedWeather> weatherList;
-    private final Context context;
-    private final DetailHelper listener;
-    private String locationTitle;
+    List<ConsolidatedWeather> weatherList;
+    Context context;
+    DetailHelper listener;
+    String locationTitle;
 
 
     public String getLocationTitle() {
@@ -55,8 +55,8 @@ public class WeatherListAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ConsolidatedWeather weather = weatherList.get(position);
         ((WeatherViewHolder) holder).weatherStateName.setText(weather.getWeatherStateName());
-        ((WeatherViewHolder) holder).temperature.setText(String.format("%d°C", Utilities.getDisplayableTemp(weather.getTheTemp())));
-        ((WeatherViewHolder) holder).humidity.setText(String.format(context.getString(R.string.humidity_adapter), weather.getHumidity()));
+        ((WeatherViewHolder) holder).temperature.setText(Utilities.getDisplayableTemp(weather.getTheTemp()) + "°C");
+        ((WeatherViewHolder) holder).humidity.setText("HUMIDITY " + weather.getHumidity() + "%");
         weather.setWeatherIconPath(weather.getWeatherStateAbbr());
         String path = weather.getWeatherIconPath();
         Glide.with(context).load(path).into(((WeatherViewHolder) holder).weatherStateIcon);
@@ -79,7 +79,12 @@ public class WeatherListAdapter extends RecyclerView.Adapter {
             e.printStackTrace();
         }
 
-        holder.itemView.setOnClickListener(v -> listener.onWeatherClickHandler(weather, locationTitle));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onWeatherClickHandler(weather, locationTitle);
+            }
+        });
     }
 
     @Override
@@ -88,12 +93,8 @@ public class WeatherListAdapter extends RecyclerView.Adapter {
     }
 
     public class WeatherViewHolder extends RecyclerView.ViewHolder {
-        final TextView weatherStateName;
-        final TextView temperature;
-        final TextView humidity;
-        final TextView today;
-        final TextView date;
-        final ImageView weatherStateIcon;
+        TextView weatherStateName, temperature, humidity, today, date;
+        ImageView weatherStateIcon;
 
         public WeatherViewHolder(View itemView) {
             super(itemView);
@@ -107,6 +108,6 @@ public class WeatherListAdapter extends RecyclerView.Adapter {
     }
 
     public interface DetailHelper {
-        void onWeatherClickHandler(ConsolidatedWeather weather, String locationTitle);
+        public void onWeatherClickHandler(ConsolidatedWeather weather, String locationTitle);
     }
 }
