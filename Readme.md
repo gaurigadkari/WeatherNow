@@ -22,10 +22,11 @@ The following **Additional** features are implemented:
 BackLog items:
 * [ ] User can choose the temperature unit between C and F, default is C
 * [ ] Add unit test cases
+* [ ] Fix Lint issues
 
 
  ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-![Video Walkthrough]()
+![Video Walkthrough](weatherNowDemo.gif)
