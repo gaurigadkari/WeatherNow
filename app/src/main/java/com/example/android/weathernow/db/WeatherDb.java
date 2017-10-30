@@ -16,5 +16,6 @@ import com.example.android.weathernow.models.Location;
 @Database(entities = {ConsolidatedWeather.class, Location.class}, version = 1)
 public abstract class WeatherDb extends RoomDatabase {
     abstract public WeatherDao weatherDao();
+
     abstract public LocationDao locationDao();
 }

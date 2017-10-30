@@ -21,6 +21,7 @@ public abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(SearchLocationViewModel.class)
     abstract ViewModel bindSearchViewModel(SearchLocationViewModel searchViewModel);
+
     @Binds
     abstract ViewModelProvider.Factory bindViewModelFactory(WeatherViewModelFactory factory);
 }

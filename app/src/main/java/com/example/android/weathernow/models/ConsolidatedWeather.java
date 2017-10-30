@@ -7,6 +7,7 @@ import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import com.example.android.weathernow.util.Constant;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -25,44 +26,50 @@ public class ConsolidatedWeather {
     private String id;
     @SerializedName("weather_state_name")
     @Expose
+    @ColumnInfo(name = "weather_state_name")
     private String weatherStateName;
     @SerializedName("weather_state_abbr")
     @Expose
+    @ColumnInfo(name = "weather_state_abbr")
     private String weatherStateAbbr;
     @SerializedName("wind_direction_compass")
     @Expose
+    @ColumnInfo(name = "wind_direction_compass")
     private String windDirectionCompass;
     @SerializedName("created")
     @Expose
     private String created;
     @SerializedName("applicable_date")
     @Expose
+    @ColumnInfo(name = "applicable_date")
     private String applicableDate;
     @SerializedName("min_temp")
     @Expose
+    @ColumnInfo(name = "min_temp")
     private float minTemp;
     @SerializedName("max_temp")
     @Expose
+    @ColumnInfo(name = "max_temp")
     private float maxTemp;
     @SerializedName("the_temp")
     @Expose
+    @ColumnInfo(name = "the_temp")
     private float theTemp;
     @SerializedName("wind_speed")
     @Expose
+    @ColumnInfo(name = "wind_speed")
     private float windSpeed;
     @SerializedName("wind_direction")
     @Expose
+    @ColumnInfo(name = "wind_direction")
     private float windDirection;
     @SerializedName("air_pressure")
     @Expose
+    @ColumnInfo(name = "air_pressure")
     private float airPressure;
     @SerializedName("humidity")
     @Expose
     private int humidity;
-//    @Ignore
-//    @SerializedName("visibility")
-//    @Expose
-//    private Object visibility;
     @SerializedName("predictability")
     @Expose
     private int predictability;
@@ -76,7 +83,7 @@ public class ConsolidatedWeather {
     }
 
     public void setWeatherIconPath(String weatherStateAbbr) {
-        this.weatherIconPath = "https://www.metaweather.com/static/img/weather/png/" + weatherStateAbbr + ".png";
+        this.weatherIconPath = Constant.IMAGE_BASER_URL + weatherStateAbbr + ".png";
     }
 
     public String getId() {
@@ -182,14 +189,6 @@ public class ConsolidatedWeather {
     public void setHumidity(int humidity) {
         this.humidity = humidity;
     }
-
-//    public Object getVisibility() {
-//        return visibility;
-//    }
-//
-//    public void setVisibility(Object visibility) {
-//        this.visibility = visibility;
-//    }
 
     public int getPredictability() {
         return predictability;

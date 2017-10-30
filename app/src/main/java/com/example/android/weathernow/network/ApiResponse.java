@@ -18,6 +18,7 @@ import retrofit2.Response;
 
 /**
  * Common class used by API responses.
+ *
  * @param <T>
  */
 public class ApiResponse<T> {
@@ -32,15 +33,17 @@ public class ApiResponse<T> {
     public final String errorMessage;
     @NonNull
     public final Map<String, String> links;
+
     public ApiResponse(Throwable error) {
         code = 500;
         body = null;
         errorMessage = error.getMessage();
         links = Collections.emptyMap();
     }
+
     public ApiResponse(Response<T> response) {
         code = response.code();
-        if(response.isSuccessful()) {
+        if (response.isSuccessful()) {
             body = response.body();
             errorMessage = null;
         } else {
@@ -49,7 +52,6 @@ public class ApiResponse<T> {
                 try {
                     message = response.errorBody().string();
                 } catch (IOException ignored) {
-//                    Timber.e(ignored, "error while parsing response");
                 }
             }
             if (message == null || message.trim().length() == 0) {
@@ -72,9 +74,11 @@ public class ApiResponse<T> {
             }
         }
     }
+
     public boolean isSuccessful() {
         return code >= 200 && code < 300;
     }
+
     public Integer getNextPage() {
         String next = links.get(NEXT_LINK);
         if (next == null) {
@@ -87,7 +91,6 @@ public class ApiResponse<T> {
         try {
             return Integer.parseInt(matcher.group(1));
         } catch (NumberFormatException ex) {
-//            Timber.w("cannot parse next page from %s", next);
             return null;
         }
     }

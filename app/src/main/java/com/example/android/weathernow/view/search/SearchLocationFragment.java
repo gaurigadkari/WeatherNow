@@ -18,7 +18,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,32 +25,24 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-
 import com.example.android.weathernow.R;
-import com.example.android.weathernow.util.Utilities;
 import com.example.android.weathernow.adapters.WeatherListAdapter;
 import com.example.android.weathernow.dagger.utility.Injectable;
 import com.example.android.weathernow.databinding.FragmentSearchLocationBinding;
 import com.example.android.weathernow.models.ConsolidatedWeather;
-import com.example.android.weathernow.models.Location;
-import com.example.android.weathernow.models.Response;
-import com.example.android.weathernow.network.WeatherApi;
+import com.example.android.weathernow.util.Utilities;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceDetectionClient;
 import com.google.android.gms.location.places.PlaceFilter;
-import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Retrofit;
 
 
 public class SearchLocationFragment extends Fragment implements Injectable {
@@ -142,14 +133,14 @@ public class SearchLocationFragment extends Fragment implements Injectable {
         });
 
         searchLocationViewModel.getLocationList().observe(this, result -> {
-            Log.d(TAG,"Observer" + result);
+            Log.d(TAG, "Observer" + result);
         });
 
         searchLocationViewModel.getConsolidatedWeather().observe(this, result -> {
-            Log.d(TAG,"Observer" + result);
-            if( result != null
+            Log.d(TAG, "Observer" + result);
+            if (result != null
                     && result.status == com.example.android.weathernow.models.Status.SUCCESS
-                    && result.data != null){
+                    && result.data != null) {
                 weatherList.clear();
                 weatherList.addAll(result.data);
                 adapter.notifyDataSetChanged();

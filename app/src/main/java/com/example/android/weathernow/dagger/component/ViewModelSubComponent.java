@@ -19,5 +19,6 @@ public interface ViewModelSubComponent {
     interface Builder {
         ViewModelSubComponent build();
     }
+
     SearchLocationViewModel searchLocationViewModel();
 }

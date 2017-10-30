@@ -24,6 +24,7 @@ public class SearchLocationViewModel extends ViewModel {
     private MutableLiveData<String> place = new MutableLiveData<>();
     private LiveData<Resource<Location>> locationList = new MutableLiveData<>();
     private LiveData<Resource<List<ConsolidatedWeather>>> weatherList;
+
     @Inject
     public SearchLocationViewModel(SearchLocationRepository searchLocationRepository) {
         locationList = Transformations.switchMap(place, place -> {
@@ -41,15 +42,18 @@ public class SearchLocationViewModel extends ViewModel {
             }
         });
     }
+
     public void setPlace(String place) {
         if (Objects.equals(this.place.getValue(), place)) {
             return;
         }
         this.place.setValue(place);
     }
+
     public LiveData<Resource<List<ConsolidatedWeather>>> getConsolidatedWeather() {
         return weatherList;
     }
+
     public LiveData<Resource<Location>> getLocationList() {
         return locationList;
     }

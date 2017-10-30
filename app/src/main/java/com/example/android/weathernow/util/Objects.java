@@ -25,4 +25,5 @@ public class Objects {
             return false;
         }
         return o1.equals(o2);
-    }}
+    }
+}

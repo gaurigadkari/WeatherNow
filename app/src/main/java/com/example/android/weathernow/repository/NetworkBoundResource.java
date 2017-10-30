@@ -6,21 +6,25 @@ import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.WorkerThread;
+
 import com.example.android.weathernow.AppExecutors;
 import com.example.android.weathernow.models.Resource;
 import com.example.android.weathernow.network.ApiResponse;
 import com.example.android.weathernow.util.Objects;
+
 /**
  * A generic class that can provide a resource backed by both the sqlite database and the network.
  * <p>
  * You can read more about it in the <a href="https://developer.android.com/arch">Architecture
  * Guide</a>.
+ *
  * @param <ResultType>
  * @param <RequestType>
  */
 public abstract class NetworkBoundResource<ResultType, RequestType> {
     private final AppExecutors appExecutors;
     private final MediatorLiveData<Resource<ResultType>> result = new MediatorLiveData<>();
+
     @MainThread
     NetworkBoundResource(AppExecutors appExecutors) {
         this.appExecutors = appExecutors;
@@ -35,12 +39,14 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
             }
         });
     }
+
     @MainThread
     private void setValue(Resource<ResultType> newValue) {
         if (!Objects.equals(result.getValue(), newValue)) {
             result.setValue(newValue);
         }
     }
+
     private void fetchFromNetwork(final LiveData<ResultType> dbSource) {
         LiveData<ApiResponse<RequestType>> apiResponse = createCall();
         // we re-attach dbSource as a new source, it will dispatch its latest value quickly
@@ -67,22 +73,29 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
             }
         });
     }
+
     protected void onFetchFailed() {
     }
+
     public LiveData<Resource<ResultType>> asLiveData() {
         return result;
     }
+
     @WorkerThread
     protected RequestType processResponse(ApiResponse<RequestType> response) {
         return response.body;
     }
+
     @WorkerThread
     protected abstract void saveCallResult(@NonNull RequestType item);
+
     @MainThread
     protected abstract boolean shouldFetch(@Nullable ResultType data);
+
     @NonNull
     @MainThread
     protected abstract LiveData<ResultType> loadFromDb();
+
     @NonNull
     @MainThread
     protected abstract LiveData<ApiResponse<RequestType>> createCall();

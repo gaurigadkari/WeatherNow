@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.bumptech.glide.Glide;
 import com.example.android.weathernow.R;
@@ -30,6 +29,7 @@ public class DetailWeatherFragment extends Fragment {
     ImageView weatherStateIcon;
     private static final String WEATHER = "weather";
     ConsolidatedWeather weather;
+
     public DetailWeatherFragment() {
     }
 

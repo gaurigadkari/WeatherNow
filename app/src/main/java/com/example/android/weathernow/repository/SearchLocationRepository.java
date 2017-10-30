@@ -24,29 +24,27 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Retrofit;
-
 /**
  * Created by Gauri Gadkari on 10/28/17.
  */
 
 @Singleton
 public class SearchLocationRepository {
-    WeatherApi weatherApi;
+    private WeatherApi weatherApi;
     private final AppExecutors appExecutors;
     private final LocationDao locationDao;
     private final WeatherDao weatherDao;
     private final WeatherDb db;
+
     @Inject
-    SearchLocationRepository(WeatherApi weatherApi, AppExecutors appExecutors, LocationDao locationDao, WeatherDao weatherDao, WeatherDb db){
+    SearchLocationRepository(WeatherApi weatherApi, AppExecutors appExecutors, LocationDao locationDao, WeatherDao weatherDao, WeatherDb db) {
         this.weatherApi = weatherApi;
         this.appExecutors = appExecutors;
         this.locationDao = locationDao;
         this.weatherDao = weatherDao;
         this.db = db;
     }
+
     public LiveData<Resource<Location>> loadLocationData(String place) {
         return new NetworkBoundResource<Location, List<Location>>(appExecutors) {
             @Override
@@ -59,10 +57,12 @@ public class SearchLocationRepository {
                     db.endTransaction();
                 }
             }
+
             @Override
             protected boolean shouldFetch(@Nullable Location data) {
                 return data == null;
             }
+
             @NonNull
             @Override
             protected LiveData<Location> loadFromDb() {
@@ -76,6 +76,7 @@ public class SearchLocationRepository {
                     }
                 });
             }
+
             @NonNull
             @Override
             protected LiveData<ApiResponse<List<Location>>> createCall() {
@@ -83,6 +84,7 @@ public class SearchLocationRepository {
             }
         }.asLiveData();
     }
+
     public LiveData<Resource<List<ConsolidatedWeather>>> loadWeatherData(int woeid) {
         return new NetworkBoundResource<List<ConsolidatedWeather>, Response>(appExecutors) {
             @Override
@@ -90,7 +92,7 @@ public class SearchLocationRepository {
                 db.beginTransaction();
                 List<ConsolidatedWeather> weathers = new ArrayList<>();
                 try {
-                    for(ConsolidatedWeather weather: item.getConsolidatedWeather()){
+                    for (ConsolidatedWeather weather : item.getConsolidatedWeather()) {
                         weather.setLocationWoeid(woeid);
                         weathers.add(weather);
                     }
@@ -100,15 +102,18 @@ public class SearchLocationRepository {
                     db.endTransaction();
                 }
             }
+
             @Override
             protected boolean shouldFetch(@Nullable List<ConsolidatedWeather> data) {
                 return data == null || data.isEmpty();
             }
+
             @NonNull
             @Override
             protected LiveData<List<ConsolidatedWeather>> loadFromDb() {
                 return weatherDao.findWeatherByWoeid(woeid);
             }
+
             @NonNull
             @Override
             protected LiveData<ApiResponse<Response>> createCall() {

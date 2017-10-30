@@ -16,7 +16,7 @@ import java.util.List;
 
 @Dao
 public interface WeatherDao {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<ConsolidatedWeather> weatherList);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
