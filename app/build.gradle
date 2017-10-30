@@ -52,6 +52,10 @@ dependencies {
     // parceler
     compile 'org.parceler:parceler-api:1.1.8'
     annotationProcessor 'org.parceler:parceler:1.1.8'
+    // Splash screen
+    compile 'com.github.ViksaaSkool:AwesomeSplash:v1.0.0'
+    // Percentile RelativeLayout
+    compile 'com.android.support:percent:26.1.0'
     // Support Library
     compile 'com.android.support:appcompat-v7:26.1.0'
     compile 'com.android.support:design:26.1.0'

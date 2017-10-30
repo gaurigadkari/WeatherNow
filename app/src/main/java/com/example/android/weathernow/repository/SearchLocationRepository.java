@@ -31,7 +31,7 @@ import javax.inject.Singleton;
 
 @Singleton
 public class SearchLocationRepository {
-    private WeatherApi weatherApi;
+    private final WeatherApi weatherApi;
     private final AppExecutors appExecutors;
     private final LocationDao locationDao;
     private final WeatherDao weatherDao;
@@ -52,7 +52,7 @@ public class SearchLocationRepository {
             protected void saveCallResult(@NonNull List<Location> item) {
                 db.beginTransaction();
                 try {
-                    Location location = null;
+                    Location location;
                     if (item != null && !item.isEmpty()) {
                         location = item.get(0);
                         location.setSearchTime(new Date().getTime());

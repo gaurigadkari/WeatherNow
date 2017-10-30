@@ -26,7 +26,6 @@ import org.parceler.Parcels;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.inject.Inject;
@@ -35,17 +34,25 @@ import javax.inject.Inject;
  * A simple {@link Fragment} subclass.
  */
 public class DetailWeatherFragment extends Fragment implements Injectable {
-    FragmentDetailWeatherBinding binding;
-    android.support.v7.widget.Toolbar toolbar;
-    TextView weatherStateName, temperature, maxTemp, minTemp, windSpeed, windDirection, today, date;
-    ImageView weatherStateIcon;
+    private FragmentDetailWeatherBinding binding;
+    private android.support.v7.widget.Toolbar toolbar;
+    private TextView weatherStateName;
+    private TextView temperature;
+    private TextView maxTemp;
+    private TextView minTemp;
+    private TextView windSpeed;
+    private TextView windDirection;
+    TextView today;
+    TextView date;
+    private ImageView weatherStateIcon;
     private static final String WEATHER = "weather";
     private static final String LOCATION_TITLE = "location_title";
-    ConsolidatedWeather weather;
-    String locationTitle;
+    private ConsolidatedWeather weather;
+    private String locationTitle;
     @Inject
+    private
     ViewModelProvider.Factory viewModelFactory;
-    private SharedSearchDetailViewModel sharedSearchDetailViewModel;
+
     public DetailWeatherFragment() {
     }
 
@@ -78,7 +85,7 @@ public class DetailWeatherFragment extends Fragment implements Injectable {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        sharedSearchDetailViewModel = ViewModelProviders.of(this, viewModelFactory).get(SharedSearchDetailViewModel.class);
+        SharedSearchDetailViewModel sharedSearchDetailViewModel = ViewModelProviders.of(this, viewModelFactory).get(SharedSearchDetailViewModel.class);
         weatherStateName = binding.weatherStateName;
         temperature = binding.temp;
         windSpeed = binding.windSpeed;
@@ -88,11 +95,11 @@ public class DetailWeatherFragment extends Fragment implements Injectable {
         toolbar = binding.toolbar;
         weatherStateIcon = binding.weatherStateIcon;
         weatherStateName.setText(weather.getWeatherStateName());
-        temperature.setText(Utilities.getDisplayableTemp(weather.getTheTemp()) + "°C");
-        minTemp.setText(Utilities.getDisplayableTemp(weather.getMinTemp()) + "°C");
-        maxTemp.setText(Utilities.getDisplayableTemp(weather.getMaxTemp()) + "°C");
-        windSpeed.setText(weather.getWindSpeed() + "");
-        windDirection.setText(weather.getWindDirectionCompass() + "");
+        temperature.setText(String.format("%d°C", Utilities.getDisplayableTemp(weather.getTheTemp())));
+        minTemp.setText(String.format("%d°C", Utilities.getDisplayableTemp(weather.getMinTemp())));
+        maxTemp.setText(String.format("%d°C", Utilities.getDisplayableTemp(weather.getMaxTemp())));
+        windSpeed.setText(String.format("%s", weather.getWindSpeed()));
+        windDirection.setText(String.format("%s", weather.getWindDirectionCompass()));
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         try {
             Date date = formatter.parse(weather.getApplicableDate());

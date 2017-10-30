@@ -16,8 +16,6 @@ package com.example.android.weathernow.dagger.utility;
  * limitations under the License.
  */
 
-import com.example.android.weathernow.view.App;
-
 import android.app.Activity;
 import android.app.Application;
 import android.os.Bundle;
