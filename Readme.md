@@ -21,6 +21,7 @@ The following **Additional** features are implemented:
 * [X] Fixed crashes and handled no response and error response from server
 
 BackLog items:
+* [ ] Get users current location and show the weather for current location by default
 * [ ] User can choose the temperature unit between C and F, default is C
 * [ ] Add unit test cases
 * [ ] Fix Lint issues
